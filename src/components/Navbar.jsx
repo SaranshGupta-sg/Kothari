@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProductsOpen, setIsProductsOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
+
+  const location = useLocation();
+
+  // ================= SCROLL NAVBAR =================
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,12 +24,61 @@ const Navbar = () => {
     };
   }, []);
 
+  // ================= ACTIVE HOME SECTIONS =================
+
+  useEffect(() => {
+    // Sirf Home page par section tracking karni hai
+    if (location.pathname !== "/") {
+      return;
+    }
+
+    const qualitySection = document.getElementById("quality");
+    const aboutSection = document.getElementById("about");
+
+    if (!qualitySection || !aboutSection) {
+      return;
+    }
+
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 150;
+
+      const qualityTop = qualitySection.offsetTop;
+      const aboutTop = aboutSection.offsetTop;
+
+      // About section
+      if (scrollPosition >= aboutTop) {
+        setActiveSection("about");
+      }
+
+      // Quality section
+      else if (scrollPosition >= qualityTop) {
+        setActiveSection("quality");
+      }
+
+      // Home / Hero / Products Preview
+      else {
+        setActiveSection("home");
+      }
+    };
+
+    handleScroll();
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [location.pathname]);
+
+  // ================= NAV LINKS =================
+
   const navLinks = [
     { name: "Home", path: "/" },
-    { name: "About Us", path: "/about" },
-    { name: "Quality", path: "/quality" },
-    { name: "Recipes", path: "/recipes" },
+    { name: "Quality", section: "quality" },
+    { name: "About Us", section: "about" },
   ];
+
+  // ================= PRODUCTS =================
 
   const productLinks = [
     { name: "All Products", path: "/products" },
@@ -33,9 +87,50 @@ const Navbar = () => {
     { name: "Hing", path: "/products/hing" },
   ];
 
+  // ================= CLOSE MENU =================
+
   const closeMenu = () => {
     setIsMenuOpen(false);
     setIsProductsOpen(false);
+  };
+
+  // ================= SCROLL TO SECTION =================
+
+  const scrollToSection = (id) => {
+    // Agar already Home page par hain
+    if (location.pathname === "/") {
+      const section = document.getElementById(id);
+
+      if (section) {
+        setActiveSection(id);
+
+        section.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+
+      closeMenu();
+      return;
+    }
+
+    // Agar kisi aur page par hain
+    window.location.href = `/#${id}`;
+  };
+
+  // ================= HOME =================
+
+  const handleHomeClick = () => {
+    closeMenu();
+
+    if (location.pathname === "/") {
+      setActiveSection("home");
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
   };
 
   return (
@@ -47,8 +142,14 @@ const Navbar = () => {
       }`}
     >
       <div className="mx-auto flex h-[82px] w-full max-w-[1440px] items-center justify-between px-6 sm:px-8 lg:px-12">
-        {/* Logo */}
-        <Link to="/" onClick={closeMenu} className="flex items-center">
+
+        {/* ================= LOGO ================= */}
+
+        <Link
+          to="/"
+          onClick={handleHomeClick}
+          className="flex items-center"
+        >
           <img
             src="/logo.png"
             alt="Kothari Masale"
@@ -56,40 +157,53 @@ const Navbar = () => {
           />
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden items-center gap-8 lg:flex">
-          {/* Home */}
+        {/* ================= DESKTOP NAVIGATION ================= */}
+
+        <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 lg:flex">
+
+          {/* ================= HOME ================= */}
+
           <NavLink
             to="/"
-            className={({ isActive }) =>
+            onClick={handleHomeClick}
+            className={() =>
               `relative py-2 text-[14px] font-semibold tracking-wide transition-colors duration-300 ${
-                isActive ? "text-[#e51b23]" : "text-[#222] hover:text-[#e51b23]"
+                location.pathname === "/" && activeSection === "home"
+                  ? "text-[#e51b23]"
+                  : "text-[#222] hover:text-[#e51b23]"
               }`
             }
           >
-            {({ isActive }) => (
-              <>
-                Home
-                <span
-                  className={`absolute bottom-0 left-0 h-[2px] bg-[#e51b23] transition-all duration-300 ${
-                    isActive ? "w-full" : "w-0"
-                  }`}
-                />
-              </>
-            )}
+            Home
+
+            <span
+              className={`absolute bottom-0 left-0 h-[2px] bg-[#e51b23] transition-all duration-300 ${
+                location.pathname === "/" && activeSection === "home"
+                  ? "w-full"
+                  : "w-0"
+              }`}
+            />
           </NavLink>
 
-          {/* Products Dropdown */}
+          {/* ================= PRODUCTS ================= */}
+
           <div
             className="relative"
             onMouseEnter={() => setIsProductsOpen(true)}
             onMouseLeave={() => setIsProductsOpen(false)}
           >
-            <button
-              type="button"
-              className="flex items-center gap-1 py-2 text-[14px] font-semibold tracking-wide text-[#222] transition-colors duration-300 hover:text-[#e51b23]"
+            <NavLink
+              to="/products"
+              className={() =>
+                `relative flex items-center gap-1 py-2 text-[14px] font-semibold tracking-wide transition-colors duration-300 ${
+                  location.pathname.startsWith("/products")
+                    ? "text-[#e51b23]"
+                    : "text-[#222] hover:text-[#e51b23]"
+                }`
+              }
             >
               Products
+
               <svg
                 className={`h-3.5 w-3.5 transition-transform duration-300 ${
                   isProductsOpen ? "rotate-180" : ""
@@ -105,7 +219,17 @@ const Navbar = () => {
                   d="m19 9-7 7-7-7"
                 />
               </svg>
-            </button>
+
+              <span
+                className={`absolute bottom-0 left-0 h-[2px] bg-[#e51b23] transition-all duration-300 ${
+                  location.pathname.startsWith("/products")
+                    ? "w-full"
+                    : "w-0"
+                }`}
+              />
+            </NavLink>
+
+            {/* Products Dropdown */}
 
             <AnimatePresence>
               {isProductsOpen && (
@@ -131,56 +255,54 @@ const Navbar = () => {
             </AnimatePresence>
           </div>
 
-          {/* Other Links */}
-          {navLinks.slice(1).map((link) => (
-            <NavLink
-              key={link.path}
-              to={link.path}
-              className={({ isActive }) =>
-                `relative py-2 text-[14px] font-semibold tracking-wide transition-colors duration-300 ${
-                  isActive
-                    ? "text-[#e51b23]"
-                    : "text-[#222] hover:text-[#e51b23]"
-                }`
-              }
-            >
-              {({ isActive }) => (
-                <>
-                  {link.name}
+          {/* ================= QUALITY ================= */}
 
-                  <span
-                    className={`absolute bottom-0 left-0 h-[2px] bg-[#e51b23] transition-all duration-300 ${
-                      isActive ? "w-full" : "w-0"
-                    }`}
-                  />
-                </>
-              )}
-            </NavLink>
-          ))}
+          <button
+            type="button"
+            onClick={() => scrollToSection("quality")}
+            className={`relative py-2 text-[14px] font-semibold tracking-wide transition-colors duration-300 ${
+              location.pathname === "/" && activeSection === "quality"
+                ? "text-[#e51b23]"
+                : "text-[#222] hover:text-[#e51b23]"
+            }`}
+          >
+            Quality
+
+            <span
+              className={`absolute bottom-0 left-0 h-[2px] bg-[#e51b23] transition-all duration-300 ${
+                location.pathname === "/" && activeSection === "quality"
+                  ? "w-full"
+                  : "w-0"
+              }`}
+            />
+          </button>
+
+          {/* ================= ABOUT US ================= */}
+
+          <button
+            type="button"
+            onClick={() => scrollToSection("about")}
+            className={`relative py-2 text-[14px] font-semibold tracking-wide transition-colors duration-300 ${
+              location.pathname === "/" && activeSection === "about"
+                ? "text-[#e51b23]"
+                : "text-[#222] hover:text-[#e51b23]"
+            }`}
+          >
+            About Us
+
+            <span
+              className={`absolute bottom-0 left-0 h-[2px] bg-[#e51b23] transition-all duration-300 ${
+                location.pathname === "/" && activeSection === "about"
+                  ? "w-full"
+                  : "w-0"
+              }`}
+            />
+          </button>
+
         </nav>
 
-        {/* Desktop Contact Button */}
-        <Link
-          to="/contact"
-          className="hidden items-center gap-2 rounded-full bg-[#e51b23] px-6 py-3 text-[13px] font-bold tracking-wide text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#c9151c] hover:shadow-[0_10px_25px_rgba(229,27,35,0.25)] lg:flex"
-        >
-          Contact Us
-          <svg
-            className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M5 12h14m-6-6 6 6-6 6"
-            />
-          </svg>
-        </Link>
+        {/* ================= MOBILE MENU BUTTON ================= */}
 
-        {/* Mobile Menu Button */}
         <button
           type="button"
           aria-label="Toggle menu"
@@ -188,27 +310,40 @@ const Navbar = () => {
           className="relative flex h-11 w-11 items-center justify-center rounded-full bg-[#e51b23] lg:hidden"
         >
           <div className="flex w-5 flex-col gap-[5px]">
-            <motion.span
-              animate={isMenuOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
-              className="block h-[2px] w-full bg-white"
-            />
 
             <motion.span
-              animate={isMenuOpen ? { opacity: 0 } : { opacity: 1 }}
+              animate={
+                isMenuOpen
+                  ? { rotate: 45, y: 7 }
+                  : { rotate: 0, y: 0 }
+              }
               className="block h-[2px] w-full bg-white"
             />
 
             <motion.span
               animate={
-                isMenuOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }
+                isMenuOpen
+                  ? { opacity: 0 }
+                  : { opacity: 1 }
               }
               className="block h-[2px] w-full bg-white"
             />
+
+            <motion.span
+              animate={
+                isMenuOpen
+                  ? { rotate: -45, y: -7 }
+                  : { rotate: 0, y: 0 }
+              }
+              className="block h-[2px] w-full bg-white"
+            />
+
           </div>
         </button>
       </div>
 
-      {/* Mobile Navigation */}
+      {/* ================= MOBILE NAVIGATION ================= */}
+
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
@@ -219,26 +354,41 @@ const Navbar = () => {
             className="overflow-hidden border-t border-black/5 bg-[#fffaf2] lg:hidden"
           >
             <nav className="mx-auto flex max-w-[1440px] flex-col px-6 py-6 sm:px-8">
+
+              {/* ================= MOBILE HOME ================= */}
+
               <NavLink
                 to="/"
-                onClick={closeMenu}
-                className={({ isActive }) =>
+                onClick={handleHomeClick}
+                className={() =>
                   `border-b border-black/5 py-4 text-lg font-semibold ${
-                    isActive ? "text-[#e51b23]" : "text-[#222]"
+                    location.pathname === "/" &&
+                    activeSection === "home"
+                      ? "text-[#e51b23]"
+                      : "text-[#222]"
                   }`
                 }
               >
                 Home
               </NavLink>
 
-              {/* Mobile Products */}
+              {/* ================= MOBILE PRODUCTS ================= */}
+
               <div className="border-b border-black/5">
+
                 <button
                   type="button"
-                  onClick={() => setIsProductsOpen(!isProductsOpen)}
-                  className="flex w-full items-center justify-between py-4 text-left text-lg font-semibold text-[#222]"
+                  onClick={() =>
+                    setIsProductsOpen(!isProductsOpen)
+                  }
+                  className={`flex w-full items-center justify-between py-4 text-left text-lg font-semibold ${
+                    location.pathname.startsWith("/products")
+                      ? "text-[#e51b23]"
+                      : "text-[#222]"
+                  }`}
                 >
                   Products
+
                   <svg
                     className={`h-5 w-5 transition-transform duration-300 ${
                       isProductsOpen ? "rotate-180" : ""
@@ -259,9 +409,18 @@ const Navbar = () => {
                 <AnimatePresence>
                   {isProductsOpen && (
                     <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
+                      initial={{
+                        height: 0,
+                        opacity: 0,
+                      }}
+                      animate={{
+                        height: "auto",
+                        opacity: 1,
+                      }}
+                      exit={{
+                        height: 0,
+                        opacity: 0,
+                      }}
                       className="overflow-hidden pb-3"
                     >
                       {productLinks.map((item) => (
@@ -277,32 +436,45 @@ const Navbar = () => {
                     </motion.div>
                   )}
                 </AnimatePresence>
+
               </div>
 
-              {/* Remaining Links */}
-              {navLinks.slice(1).map((link) => (
-                <NavLink
-                  key={link.path}
-                  to={link.path}
-                  onClick={closeMenu}
-                  className={({ isActive }) =>
-                    `border-b border-black/5 py-4 text-lg font-semibold ${
-                      isActive ? "text-[#e51b23]" : "text-[#222]"
-                    }`
-                  }
-                >
-                  {link.name}
-                </NavLink>
-              ))}
+              {/* ================= MOBILE QUALITY ================= */}
 
-              {/* Mobile Contact */}
-              <Link
-                to="/contact"
-                onClick={closeMenu}
-                className="mt-6 flex items-center justify-center rounded-full bg-[#e51b23] px-6 py-4 text-sm font-bold text-white"
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveSection("quality");
+                  scrollToSection("quality");
+                }}
+                className={`relative border-b border-black/5 py-4 text-left text-lg font-semibold ${
+                  location.pathname === "/" &&
+                  activeSection === "quality"
+                    ? "text-[#e51b23]"
+                    : "text-[#222]"
+                }`}
               >
-                Contact Us
-              </Link>
+                Quality
+              </button>
+
+              {/* ================= MOBILE ABOUT ================= */}
+
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveSection("about");
+                  scrollToSection("about");
+                }}
+                className={`relative py-4 text-left text-lg font-semibold ${
+                  location.pathname === "/" &&
+                  activeSection === "about"
+                    ? "text-[#e51b23]"
+                    : "text-[#222]"
+                }`}
+              >
+                About Us
+              </button>
+
             </nav>
           </motion.div>
         )}
