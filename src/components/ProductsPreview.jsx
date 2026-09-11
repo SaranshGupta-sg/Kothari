@@ -62,10 +62,8 @@ const ProductsPreview = () => {
       className="relative overflow-hidden bg-[#fff8ed] px-6 py-24 sm:px-10 lg:px-16"
     >
       <div className="mx-auto max-w-7xl">
-
         {/* Heading */}
         <div className="preview-heading mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
-
           <div>
             <p className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-[#e51b23]">
               Our Collection
@@ -77,8 +75,8 @@ const ProductsPreview = () => {
             </h2>
 
             <p className="mt-4 max-w-xl text-sm leading-6 text-gray-500 sm:text-base">
-              Discover Kothari's range of authentic spices and masalas,
-              crafted to bring delicious flavours to every kitchen.
+              Discover Kothari's range of authentic spices and masalas, crafted
+              to bring delicious flavours to every kitchen.
             </p>
           </div>
 
@@ -88,17 +86,14 @@ const ProductsPreview = () => {
             className="group flex w-fit items-center gap-3 rounded-full border border-[#171717] px-6 py-3 text-sm font-bold text-[#171717] transition-all duration-300 hover:bg-[#e51b23] hover:border-[#e51b23] hover:text-white"
           >
             View All Products
-
             <span className="transition-transform duration-300 group-hover:translate-x-1">
               →
             </span>
           </Link>
-
         </div>
 
         {/* Product Cards */}
         <div className="preview-grid grid gap-6 md:grid-cols-3">
-
           {products.map((product) => (
             <motion.div
               key={product.name}
@@ -106,10 +101,8 @@ const ProductsPreview = () => {
               transition={{ duration: 0.35 }}
               className="preview-card group overflow-hidden rounded-[28px] bg-white shadow-sm"
             >
-
               {/* Image */}
               <div className="relative flex h-[400px] items-center justify-center overflow-hidden bg-[#f6efe4]">
-
                 {/* Background circle */}
                 <div className="absolute h-[260px] w-[260px] rounded-full bg-[#e51b23]/10 transition-transform duration-700 group-hover:scale-110" />
 
@@ -133,12 +126,10 @@ const ProductsPreview = () => {
                   }}
                   transition={{ duration: 0.4 }}
                 />
-
               </div>
 
               {/* Card Content */}
               <div className="flex items-center justify-between p-6">
-
                 <div>
                   <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.2em] text-[#e51b23]">
                     {product.category}
@@ -148,12 +139,9 @@ const ProductsPreview = () => {
                     {product.name}
                   </h3>
                 </div>
-
               </div>
-
             </motion.div>
           ))}
-
         </div>
 
         {/* Bottom line */}
@@ -166,7 +154,6 @@ const ProductsPreview = () => {
 
           <span className="h-px w-12 bg-gray-300" />
         </div>
-
       </div>
     </section>
   );

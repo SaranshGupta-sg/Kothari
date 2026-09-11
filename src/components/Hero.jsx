@@ -94,20 +94,20 @@ const Hero = () => {
 
       // Scroll parallax
       // Scroll parallax
-// Desktop/tablet par hi chalega
-const mm = gsap.matchMedia();
+      // Desktop/tablet par hi chalega
+      const mm = gsap.matchMedia();
 
-mm.add("(min-width: 768px)", () => {
-  gsap.to(productRef.current, {
-    ease: "none",
-    scrollTrigger: {
-      trigger: heroRef.current,
-      start: "top top",
-      end: "bottom top",
-      scrub: true,
-    },
-  });
-});
+      mm.add("(min-width: 768px)", () => {
+        gsap.to(productRef.current, {
+          ease: "none",
+          scrollTrigger: {
+            trigger: heroRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+      });
     }, heroRef);
 
     return () => ctx.revert();
@@ -228,9 +228,7 @@ mm.add("(min-width: 768px)", () => {
             {/* Product Showcase */}
             <div className="relative flex h-[360px] w-full items-center justify-center sm:h-[430px] lg:h-[500px]">
               {/* Background Circle */}
-              <div
-                className="absolute h-[300px] w-[300px] rounded-full bg-[#e51b23] sm:h-[380px] sm:w-[380px] lg:h-[430px] lg:w-[430px]"
-              />
+              <div className="absolute h-[300px] w-[300px] rounded-full bg-[#e51b23] sm:h-[380px] sm:w-[380px] lg:h-[430px] lg:w-[430px]" />
 
               {/* Left Product */}
               <motion.img

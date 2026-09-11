@@ -70,31 +70,31 @@ const Footer = () => {
 
             <div className="mt-6 flex flex-col gap-4">
               <Link
-                to="/"
+                to="/#home"
                 className="w-fit text-sm text-white/70 transition-colors hover:text-[#e51b23]"
               >
                 Home
               </Link>
 
               <Link
-                to="/products"
+                to="/#products"
                 className="w-fit text-sm text-white/70 transition-colors hover:text-[#e51b23]"
               >
                 Products
               </Link>
 
               <Link
-                to="/about"
-                className="w-fit text-sm text-white/70 transition-colors hover:text-[#e51b23]"
-              >
-                About Us
-              </Link>
-
-              <Link
-                to="/quality"
+                to="/#quality"
                 className="w-fit text-sm text-white/70 transition-colors hover:text-[#e51b23]"
               >
                 Quality
+              </Link>
+
+              <Link
+                to="/#about"
+                className="w-fit text-sm text-white/70 transition-colors hover:text-[#e51b23]"
+              >
+                About Us
               </Link>
             </div>
           </div>
@@ -107,31 +107,45 @@ const Footer = () => {
 
             <div className="mt-6 flex flex-col gap-4">
               <Link
-                to="/products/blended-masalas"
+                to="/products#everyday"
                 className="w-fit text-sm text-white/70 transition-colors hover:text-[#e51b23]"
               >
-                Blended Masalas
+                Everyday Masalas
               </Link>
 
               <Link
-                to="/products/powdered-spices"
+                to="/products#curry-gravy"
                 className="w-fit text-sm text-white/70 transition-colors hover:text-[#e51b23]"
               >
-                Powdered Spices
+                Curry & Gravy Masalas
               </Link>
 
               <Link
-                to="/products/hing"
+                to="/products#special"
                 className="w-fit text-sm text-white/70 transition-colors hover:text-[#e51b23]"
               >
-                Hing
+                Special Recipe Masalas
+              </Link>
+
+              <Link
+                to="/products#chaat"
+                className="w-fit text-sm text-white/70 transition-colors hover:text-[#e51b23]"
+              >
+                Chaat & Refreshment
+              </Link>
+
+              <Link
+                to="/products#tea"
+                className="w-fit text-sm text-white/70 transition-colors hover:text-[#e51b23]"
+              >
+                Tea & Beverage
               </Link>
 
               <Link
                 to="/products"
-                className="w-fit text-sm text-white/70 transition-colors hover:text-[#e51b23]"
+                className="w-fit text-sm font-semibold text-white transition-colors hover:text-[#e51b23]"
               >
-                All Products
+                All Products →
               </Link>
             </div>
           </div>

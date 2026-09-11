@@ -9,7 +9,6 @@ import Products from "./pages/Products/Products";
 function App() {
   return (
     <BrowserRouter>
-
       <Navbar />
 
       <Routes>
@@ -18,7 +17,6 @@ function App() {
       </Routes>
 
       <Footer />
-
     </BrowserRouter>
   );
 }

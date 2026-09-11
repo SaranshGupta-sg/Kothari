@@ -26,39 +26,44 @@ const Navbar = () => {
 
   // ================= ACTIVE HOME SECTIONS =================
 
+  // ================= ACTIVE HOME SECTIONS =================
+
   useEffect(() => {
-    // Sirf Home page par section tracking karni hai
     if (location.pathname !== "/") {
       return;
     }
 
-    const qualitySection = document.getElementById("quality");
-    const aboutSection = document.getElementById("about");
-
-    if (!qualitySection || !aboutSection) {
-      return;
-    }
-
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + 150;
+      const sections = [
+        {
+          id: "home",
+          element: document.getElementById("home"),
+        },
+        {
+          id: "products",
+          element: document.getElementById("products"),
+        },
+        {
+          id: "quality",
+          element: document.getElementById("quality"),
+        },
+        {
+          id: "about",
+          element: document.getElementById("about"),
+        },
+      ];
 
-      const qualityTop = qualitySection.offsetTop;
-      const aboutTop = aboutSection.offsetTop;
+      const scrollPosition = window.scrollY + 180;
 
-      // About section
-      if (scrollPosition >= aboutTop) {
-        setActiveSection("about");
-      }
+      let currentSection = "home";
 
-      // Quality section
-      else if (scrollPosition >= qualityTop) {
-        setActiveSection("quality");
-      }
+      sections.forEach((section) => {
+        if (section.element && scrollPosition >= section.element.offsetTop) {
+          currentSection = section.id;
+        }
+      });
 
-      // Home / Hero / Products Preview
-      else {
-        setActiveSection("home");
-      }
+      setActiveSection(currentSection);
     };
 
     handleScroll();
@@ -70,12 +75,13 @@ const Navbar = () => {
     };
   }, [location.pathname]);
 
-
   const productLinks = [
     { name: "All Products", path: "/products" },
-    { name: "Blended Masalas", path: "/products/blended-masalas" },
-    { name: "Powdered Spices", path: "/products/powdered-spices" },
-    { name: "Hing", path: "/products/hing" },
+    { name: "Everyday Masalas", path: "/products#everyday" },
+    { name: "Curry & Gravy Masalas", path: "/products#curry-gravy" },
+    { name: "Special Recipe Masalas", path: "/products#special" },
+    { name: "Chaat & Refreshment", path: "/products#chaat" },
+    { name: "Tea & Beverage", path: "/products#tea" },
   ];
 
   // ================= CLOSE MENU =================
@@ -133,14 +139,9 @@ const Navbar = () => {
       }`}
     >
       <div className="mx-auto flex h-[82px] w-full max-w-[1440px] items-center justify-between px-6 sm:px-8 lg:px-12">
-
         {/* ================= LOGO ================= */}
 
-        <Link
-          to="/"
-          onClick={handleHomeClick}
-          className="flex items-center"
-        >
+        <Link to="/" onClick={handleHomeClick} className="flex items-center">
           <img
             src="/logo.png"
             alt="Kothari Masale"
@@ -151,7 +152,6 @@ const Navbar = () => {
         {/* ================= DESKTOP NAVIGATION ================= */}
 
         <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 lg:flex">
-
           {/* ================= HOME ================= */}
 
           <NavLink
@@ -166,7 +166,6 @@ const Navbar = () => {
             }
           >
             Home
-
             <span
               className={`absolute bottom-0 left-0 h-[2px] bg-[#e51b23] transition-all duration-300 ${
                 location.pathname === "/" && activeSection === "home"
@@ -194,7 +193,6 @@ const Navbar = () => {
               }
             >
               Products
-
               <svg
                 className={`h-3.5 w-3.5 transition-transform duration-300 ${
                   isProductsOpen ? "rotate-180" : ""
@@ -210,12 +208,9 @@ const Navbar = () => {
                   d="m19 9-7 7-7-7"
                 />
               </svg>
-
               <span
                 className={`absolute bottom-0 left-0 h-[2px] bg-[#e51b23] transition-all duration-300 ${
-                  location.pathname.startsWith("/products")
-                    ? "w-full"
-                    : "w-0"
+                  location.pathname.startsWith("/products") ? "w-full" : "w-0"
                 }`}
               />
             </NavLink>
@@ -258,7 +253,6 @@ const Navbar = () => {
             }`}
           >
             Quality
-
             <span
               className={`absolute bottom-0 left-0 h-[2px] bg-[#e51b23] transition-all duration-300 ${
                 location.pathname === "/" && activeSection === "quality"
@@ -280,7 +274,6 @@ const Navbar = () => {
             }`}
           >
             About Us
-
             <span
               className={`absolute bottom-0 left-0 h-[2px] bg-[#e51b23] transition-all duration-300 ${
                 location.pathname === "/" && activeSection === "about"
@@ -289,7 +282,6 @@ const Navbar = () => {
               }`}
             />
           </button>
-
         </nav>
 
         {/* ================= MOBILE MENU BUTTON ================= */}
@@ -301,34 +293,22 @@ const Navbar = () => {
           className="relative flex h-11 w-11 items-center justify-center rounded-full bg-[#e51b23] lg:hidden"
         >
           <div className="flex w-5 flex-col gap-[5px]">
+            <motion.span
+              animate={isMenuOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
+              className="block h-[2px] w-full bg-white"
+            />
 
             <motion.span
-              animate={
-                isMenuOpen
-                  ? { rotate: 45, y: 7 }
-                  : { rotate: 0, y: 0 }
-              }
+              animate={isMenuOpen ? { opacity: 0 } : { opacity: 1 }}
               className="block h-[2px] w-full bg-white"
             />
 
             <motion.span
               animate={
-                isMenuOpen
-                  ? { opacity: 0 }
-                  : { opacity: 1 }
+                isMenuOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }
               }
               className="block h-[2px] w-full bg-white"
             />
-
-            <motion.span
-              animate={
-                isMenuOpen
-                  ? { rotate: -45, y: -7 }
-                  : { rotate: 0, y: 0 }
-              }
-              className="block h-[2px] w-full bg-white"
-            />
-
           </div>
         </button>
       </div>
@@ -345,7 +325,6 @@ const Navbar = () => {
             className="overflow-hidden border-t border-black/5 bg-[#fffaf2] lg:hidden"
           >
             <nav className="mx-auto flex max-w-[1440px] flex-col px-6 py-6 sm:px-8">
-
               {/* ================= MOBILE HOME ================= */}
 
               <NavLink
@@ -353,8 +332,7 @@ const Navbar = () => {
                 onClick={handleHomeClick}
                 className={() =>
                   `border-b border-black/5 py-4 text-lg font-semibold ${
-                    location.pathname === "/" &&
-                    activeSection === "home"
+                    location.pathname === "/" && activeSection === "home"
                       ? "text-[#e51b23]"
                       : "text-[#222]"
                   }`
@@ -366,12 +344,9 @@ const Navbar = () => {
               {/* ================= MOBILE PRODUCTS ================= */}
 
               <div className="border-b border-black/5">
-
                 <button
                   type="button"
-                  onClick={() =>
-                    setIsProductsOpen(!isProductsOpen)
-                  }
+                  onClick={() => setIsProductsOpen(!isProductsOpen)}
                   className={`flex w-full items-center justify-between py-4 text-left text-lg font-semibold ${
                     location.pathname.startsWith("/products")
                       ? "text-[#e51b23]"
@@ -379,7 +354,6 @@ const Navbar = () => {
                   }`}
                 >
                   Products
-
                   <svg
                     className={`h-5 w-5 transition-transform duration-300 ${
                       isProductsOpen ? "rotate-180" : ""
@@ -427,7 +401,6 @@ const Navbar = () => {
                     </motion.div>
                   )}
                 </AnimatePresence>
-
               </div>
 
               {/* ================= MOBILE QUALITY ================= */}
@@ -439,8 +412,7 @@ const Navbar = () => {
                   scrollToSection("quality");
                 }}
                 className={`relative border-b border-black/5 py-4 text-left text-lg font-semibold ${
-                  location.pathname === "/" &&
-                  activeSection === "quality"
+                  location.pathname === "/" && activeSection === "quality"
                     ? "text-[#e51b23]"
                     : "text-[#222]"
                 }`}
@@ -457,15 +429,13 @@ const Navbar = () => {
                   scrollToSection("about");
                 }}
                 className={`relative py-4 text-left text-lg font-semibold ${
-                  location.pathname === "/" &&
-                  activeSection === "about"
+                  location.pathname === "/" && activeSection === "about"
                     ? "text-[#e51b23]"
                     : "text-[#222]"
                 }`}
               >
                 About Us
               </button>
-
             </nav>
           </motion.div>
         )}
