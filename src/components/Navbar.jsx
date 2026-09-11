@@ -70,15 +70,6 @@ const Navbar = () => {
     };
   }, [location.pathname]);
 
-  // ================= NAV LINKS =================
-
-  const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "Quality", section: "quality" },
-    { name: "About Us", section: "about" },
-  ];
-
-  // ================= PRODUCTS =================
 
   const productLinks = [
     { name: "All Products", path: "/products" },
@@ -195,7 +186,7 @@ const Navbar = () => {
             <NavLink
               to="/products"
               className={() =>
-                `relative flex items-center gap-1 py-2 text-[14px] font-semibold tracking-wide transition-colors duration-300 ${
+                `relative flex items-center gap-1 py-2 text-[14px] font-semibold tracking-wide transition-colors duration-300 cursor-pointer ${
                   location.pathname.startsWith("/products")
                     ? "text-[#e51b23]"
                     : "text-[#222] hover:text-[#e51b23]"
@@ -260,7 +251,7 @@ const Navbar = () => {
           <button
             type="button"
             onClick={() => scrollToSection("quality")}
-            className={`relative py-2 text-[14px] font-semibold tracking-wide transition-colors duration-300 ${
+            className={`relative py-2 text-[14px] font-semibold tracking-wide transition-colors duration-300 cursor-pointer ${
               location.pathname === "/" && activeSection === "quality"
                 ? "text-[#e51b23]"
                 : "text-[#222] hover:text-[#e51b23]"
@@ -282,7 +273,7 @@ const Navbar = () => {
           <button
             type="button"
             onClick={() => scrollToSection("about")}
-            className={`relative py-2 text-[14px] font-semibold tracking-wide transition-colors duration-300 ${
+            className={`relative py-2 text-[14px] font-semibold tracking-wide transition-colors duration-300 cursor-pointer ${
               location.pathname === "/" && activeSection === "about"
                 ? "text-[#e51b23]"
                 : "text-[#222] hover:text-[#e51b23]"
