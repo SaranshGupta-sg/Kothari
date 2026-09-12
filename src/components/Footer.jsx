@@ -166,7 +166,7 @@ const Footer = () => {
                   href="mailto:info@kotharimasale.com"
                   className="mt-1 block text-sm text-white/70 transition-colors hover:text-[#e51b23]"
                 >
-                  info@kotharimasale.com
+                  kotharimasale691@gmail.com
                 </a>
               </div>
 
@@ -179,7 +179,7 @@ const Footer = () => {
                   href="tel:+910000000000"
                   className="mt-1 block text-sm text-white/70 transition-colors hover:text-[#e51b23]"
                 >
-                  +91 XXXXX XXXXX
+                  +91 9950899859
                 </a>
               </div>
 
