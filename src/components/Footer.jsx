@@ -204,7 +204,7 @@ const Footer = () => {
                   Location
                 </p>
 
-                <p className="mt-1 text-sm leading-6 text-white/70">India</p>
+                <p className="mt-1 text-sm leading-6 text-white/70">Kota, Rajasthan</p>
               </div>
             </div>
           </div>
