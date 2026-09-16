@@ -76,13 +76,22 @@ const Navbar = () => {
   }, [location.pathname]);
 
   const productLinks = [
-    { name: "All Products", path: "/products" },
-    { name: "Everyday Masalas", path: "/products#everyday" },
-    { name: "Curry & Gravy Masalas", path: "/products#curry-gravy" },
-    { name: "Special Recipe Masalas", path: "/products#special" },
-    { name: "Chaat & Refreshment", path: "/products#chaat" },
-    { name: "Tea & Beverage", path: "/products#tea" },
-  ];
+  { name: "All Products", path: "/products" },
+
+  { name: "Everyday Masalas", path: "/products#everyday" },
+
+  { name: "Curry & Gravy Masalas", path: "/products#curry-gravy" },
+
+  { name: "Special Recipe Masalas", path: "/products#special" },
+
+  { name: "Chaat & Refreshment", path: "/products#chaat" },
+
+  { name: "Tea & Beverage", path: "/products#tea" },
+
+  { name: "Pure Hing", path: "/products#hing" },
+
+  { name: "More From Kothari", path: "/products#more" },
+];
 
   // ================= CLOSE MENU =================
 
@@ -145,7 +154,7 @@ const Navbar = () => {
           <img
             src="/logo.png"
             alt="Kothari Masale"
-            className="h-14 w-auto object-contain"
+            className="h-20 pl-3 w-auto object-contain"
           />
         </Link>
 

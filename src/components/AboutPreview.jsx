@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
+import { Link } from "react-router-dom";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -68,14 +69,21 @@ const AboutPreview = () => {
               <div className="absolute bottom-20 left-10 h-3 w-3 rounded-full bg-white/40" />
 
               {/* Center */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center px-8 text-center">
+              <div className="absolute inset-0 flex flex-col items-center justify-center px-8 text-center gap-4">
                 <p className="text-xs font-bold uppercase tracking-[0.4em] text-white/60">
                   The Kothari Story
                 </p>
 
-                <h2 className="mt-6 text-7xl font-black leading-none tracking-tight text-white sm:text-8xl">
-                  KKG
-                </h2>
+                <Link
+                  to="/"
+                  className="flex items-center rounded-4xl bg-white px-3 py-2"
+                >
+                  <img
+                    src="/logo.png"
+                    alt="Kothari Masale"
+                    className="h-44 w-auto object-contain"
+                  />
+                </Link>
 
                 <div className="mx-auto mt-5 h-px w-20 bg-white/50" />
 

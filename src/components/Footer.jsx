@@ -100,55 +100,71 @@ const Footer = () => {
           </div>
 
           {/* Products */}
-          <div>
-            <h3 className="text-xs font-bold uppercase tracking-[0.25em] text-white/40">
-              Products
-            </h3>
+<div>
+  <h3 className="text-xs font-bold uppercase tracking-[0.25em] text-white/40">
+    Products
+  </h3>
 
-            <div className="mt-6 flex flex-col gap-4">
-              <Link
-                to="/products#everyday"
-                className="w-fit text-sm text-white/70 transition-colors hover:text-[#e51b23]"
-              >
-                Everyday Masalas
-              </Link>
+  <div className="mt-6 flex flex-col gap-4">
+    <Link
+      to="/products#everyday"
+      className="w-fit text-sm text-white/70 transition-colors hover:text-[#e51b23]"
+    >
+      Everyday Masalas
+    </Link>
 
-              <Link
-                to="/products#curry-gravy"
-                className="w-fit text-sm text-white/70 transition-colors hover:text-[#e51b23]"
-              >
-                Curry & Gravy Masalas
-              </Link>
+    <Link
+      to="/products#curry-gravy"
+      className="w-fit text-sm text-white/70 transition-colors hover:text-[#e51b23]"
+    >
+      Curry & Gravy Masalas
+    </Link>
 
-              <Link
-                to="/products#special"
-                className="w-fit text-sm text-white/70 transition-colors hover:text-[#e51b23]"
-              >
-                Special Recipe Masalas
-              </Link>
+    <Link
+      to="/products#special"
+      className="w-fit text-sm text-white/70 transition-colors hover:text-[#e51b23]"
+    >
+      Special Recipe Masalas
+    </Link>
 
-              <Link
-                to="/products#chaat"
-                className="w-fit text-sm text-white/70 transition-colors hover:text-[#e51b23]"
-              >
-                Chaat & Refreshment
-              </Link>
+    <Link
+      to="/products#chaat"
+      className="w-fit text-sm text-white/70 transition-colors hover:text-[#e51b23]"
+    >
+      Chaat & Refreshment
+    </Link>
 
-              <Link
-                to="/products#tea"
-                className="w-fit text-sm text-white/70 transition-colors hover:text-[#e51b23]"
-              >
-                Tea & Beverage
-              </Link>
+    <Link
+      to="/products#tea"
+      className="w-fit text-sm text-white/70 transition-colors hover:text-[#e51b23]"
+    >
+      Tea & Beverage
+    </Link>
 
-              <Link
-                to="/products"
-                className="w-fit text-sm font-semibold text-white transition-colors hover:text-[#e51b23]"
-              >
-                All Products →
-              </Link>
-            </div>
-          </div>
+    {/* Pure Hing */}
+    <Link
+      to="/products#hing"
+      className="w-fit text-sm text-white/70 transition-colors hover:text-[#e51b23]"
+    >
+      Pure Hing
+    </Link>
+
+    {/* More From Kothari */}
+    <Link
+      to="/products#more"
+      className="w-fit text-sm text-white/70 transition-colors hover:text-[#e51b23]"
+    >
+      More From Kothari
+    </Link>
+
+    <Link
+      to="/products"
+      className="w-fit text-sm font-semibold text-white transition-colors hover:text-[#e51b23]"
+    >
+      All Products →
+    </Link>
+  </div>
+</div>
 
           {/* Contact */}
           <div>
