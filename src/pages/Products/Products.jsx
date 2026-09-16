@@ -274,14 +274,14 @@ const Products = () => {
 
   const hingProducts = [
     {
-      name: "Kabuli Hing Powder Green",
+      name: "Kabuli Hing Powder",
       image: "/products/Kabuli_Hing_Powder_Green.jpeg",
       size: "20gm",
       description:
         "Premium Kabuli Hing for a rich aroma and authentic flavour.",
     },
     {
-      name: "Afgani Hing",
+      name: "Sabut Afgani Hing",
       image: "/products/Afgani_Hing.jpeg",
       size: "10gm",
       description: "Authentic Afgani Hing with a strong and aromatic flavour.",
@@ -312,7 +312,7 @@ const Products = () => {
       size: "100gm • 200gm • 500gm • 1kg",
     },
     {
-      name: "Sond Powder",
+      name: "Soth Powder",
       image: "/products/Sond_Powder.jpeg",
       size: "Available Packing",
     },
